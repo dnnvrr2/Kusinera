@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { Text, StyleSheet } from "react-native";
 import AuthInput from "../components/authInput";
 import AuthButton from "../components/authButton";
+import AuthLayout from "../components/AuthLayout";
 
-export default function RegisterScreen({ goToLogin, onRegisterSuccess }) {
+export default function RegisterScreen({ accounts, goToLogin, onRegisterSuccess }) {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -11,95 +12,53 @@ export default function RegisterScreen({ goToLogin, onRegisterSuccess }) {
   const [error, setError] = useState("");
 
   function handleRegister() {
-    if (!email || !username || !password || !confirmPassword) {
-      setError("Please fill in all fields");
+    const cleanEmail = email.trim().toLowerCase();
+    const cleanUsername = username.trim();
+
+    if (!cleanEmail || !cleanUsername || !password || !confirmPassword) {
+      setError("Please fill in all fields.");
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanEmail)) {
+      setError("Please enter a valid email address.");
+      return;
+    }
+    if (password.length < 8) {
+      setError("Your password must have at least 8 characters.");
+      return;
+    }
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
       return;
     }
 
-    if (password !== confirmPassword) {
-      setError("Passwords do not match");
+    const accountExists = accounts.some(
+      (user) => user.email === cleanEmail
+        || user.username.toLowerCase() === cleanUsername.toLowerCase()
+    );
+    if (accountExists) {
+      setError("That email or username is already registered.");
       return;
     }
 
     setError("");
-    onRegisterSuccess();
+    onRegisterSuccess({ email: cleanEmail, username: cleanUsername, password });
   }
 
   return (
-    <View style={styles.background}>
-      <View style={styles.card}>
-        <Text style={styles.title}>Register</Text>
-
-        <AuthInput
-          placeholder="Email"
-          value={email}
-          onChangeText={setEmail}
-          keyboardType="email-address"
-        />
-
-        <AuthInput
-          placeholder="Username"
-          value={username}
-          onChangeText={setUsername}
-        />
-
-        <AuthInput
-          placeholder="Password"
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry
-        />
-
-        <AuthInput
-          placeholder="Confirm Password"
-          value={confirmPassword}
-          onChangeText={setConfirmPassword}
-          secureTextEntry
-        />
-
-        {error ? <Text style={styles.errorText}>{error}</Text> : null}
-
-        <AuthButton title="Register" onPress={handleRegister} />
-
-        <Text style={styles.registerText} onPress={goToLogin}>
-          Already have an account? <Text style={styles.registerLink}>Login here</Text>
-        </Text>
-      </View>
-    </View>
+    <AuthLayout title="Create an account" subtitle="Welcome to the Kusinera table.">
+      <AuthInput label="Email" placeholder="you@example.com" value={email} onChangeText={setEmail} keyboardType="email-address" />
+      <AuthInput label="Username" placeholder="Choose a username" value={username} onChangeText={setUsername} />
+      <AuthInput label="Password" placeholder="At least 8 characters" value={password} onChangeText={setPassword} secureTextEntry />
+      <AuthInput label="Confirm password" placeholder="Enter your password again" value={confirmPassword} onChangeText={setConfirmPassword} secureTextEntry />
+      {error ? <Text accessibilityRole="alert" style={styles.error}>{error}</Text> : null}
+      <AuthButton title="Create account" onPress={handleRegister} />
+      <Text accessibilityRole="link" style={styles.link} onPress={goToLogin}>Already have an account? Log in here</Text>
+    </AuthLayout>
   );
 }
 
 const styles = StyleSheet.create({
-  background: {
-    flex: 1,
-    backgroundColor: "#E0E6F8",
-    justifyContent: "center",
-    padding: 20,
-  },
-  card: {
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 25,
-  },
-  title: {
-    fontSize: 26,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginBottom: 20,
-  },
-  errorText: {
-    color: "red",
-    textAlign: "center",
-    marginBottom: 10,
-  },
-  registerText: {
-    textAlign: "center",
-    marginTop: 15,
-    fontSize: 14,
-    color: "#555",
-  },
-  registerLink: {
-    color: "#6D0808",
-    fontWeight: "bold",
-  },
+  error: { color: "#B42318", marginBottom: 10, lineHeight: 20 },
+  link: { textAlign: "center", marginTop: 20, color: "#6D0808", lineHeight: 22 },
 });

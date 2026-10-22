@@ -1,105 +1,48 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { Text, StyleSheet } from "react-native";
 import AuthInput from "../components/authInput";
 import AuthButton from "../components/authButton";
+import AuthLayout from "../components/AuthLayout";
 
-export default function LoginScreen({ goToRegister, onLoginSuccess }) {
+export default function LoginScreen({ accounts, message, goToRegister, onLoginSuccess, goToHome }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
   function handleLogin() {
-    if (username === "admin" && password === "1234") {
-      setError("");
-      onLoginSuccess();
-    } else {
-      setError("Wrong username or password");
+    if (!username.trim() || !password) {
+      setError("Please enter your username and password.");
+      return;
     }
+
+    const account = accounts.find(
+      (user) => user.username.toLowerCase() === username.trim().toLowerCase()
+        && user.password === password
+    );
+    if (!account) {
+      setError("Incorrect username or password.");
+      return;
+    }
+
+    setError("");
+    onLoginSuccess(account);
   }
 
   return (
-    <View style={styles.background}>
-
-      <Text style = {styles.sTitle}>KUSINERA</Text>
-      <Text style = {styles.sTitle1}>Restaurant</Text>
-
-      <View style={styles.card}>
-        <Text style={styles.title}>Login</Text>
-
-        <AuthInput
-          placeholder="Username"
-          value={username}
-          onChangeText={setUsername}
-        />
-
-        <AuthInput
-          placeholder="Password"
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry
-        />
-
-        {error ? <Text style={styles.errorText}>{error}</Text> : null}
-
-        <AuthButton title="Login" onPress={handleLogin} />
-
-        <Text style={styles.registerText} onPress={goToRegister}>
-          Don't have an account? <Text style={styles.registerLink}>Register here</Text>
-        </Text>
-
-      </View>
-    </View>
+    <AuthLayout title="Welcome back" subtitle="Log in to your Kusinera account.">
+      {message ? <Text accessibilityLiveRegion="polite" style={styles.success}>{message}</Text> : null}
+      <AuthInput label="Username" placeholder="Enter your username" value={username} onChangeText={setUsername} />
+      <AuthInput label="Password" placeholder="Enter your password" value={password} onChangeText={setPassword} secureTextEntry />
+      {error ? <Text accessibilityRole="alert" style={styles.error}>{error}</Text> : null}
+      <AuthButton title="Log in" onPress={handleLogin} />
+      <Text accessibilityRole="link" style={styles.link} onPress={goToRegister}>Don't have an account? Register here</Text>
+      <Text accessibilityRole="link" style={styles.link} onPress={goToHome}>Back to menu</Text>
+    </AuthLayout>
   );
 }
 
 const styles = StyleSheet.create({
-  background: {
-    flex: 1,
-    backgroundColor: "#E0E6F8",
-    justifyContent: "center",
-    padding: 20,
-  },
-
-  sTitle: {
-    color: '#6D0808',
-    alignSelf: 'center',
-    fontWeight: '1000',
-    fontSize: 40,
-    marginBottom: -10
-  },
-
-    sTitle1: {
-    color: '#6D0808',
-    alignSelf: 'center',
-    fontWeight: 'regular',
-    fontSize: 20,
-    marginBottom: 30
-  },
-
-  card: {
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 25,
-  },
-  title: {
-    fontSize: 26,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginBottom: 20,
-  },
-  errorText: {
-    color: "red",
-    textAlign: "center",
-    marginBottom: 10,
-  },
-  registerText: {
-    textAlign: "center",
-    marginTop: 15,
-    fontSize: 14,
-    color: "#555",
-  },
-  registerLink: {
-    color: "#6D0808",
-    fontWeight: "bold",
-  },
+  error: { color: "#B42318", marginBottom: 10, lineHeight: 20 },
+  success: { color: "#27613B", marginBottom: 16, lineHeight: 20 },
+  link: { textAlign: "center", marginTop: 20, color: "#6D0808", lineHeight: 22 },
 });
