@@ -13,7 +13,17 @@ export default function ScreenContainer({ children }) {
 }
 
 const styles = StyleSheet.create({
-  background: { flex: 1, backgroundColor: "#E0E6F8" },
-  scroll: { flexGrow: 1, padding: 24 },
-  content: { width: "100%", maxWidth: 600, alignSelf: "center" },
+  background: {
+    flex: 1,
+    backgroundColor: "#E0E6F8",
+  },
+  scroll: {
+    flexGrow: 1,
+    padding: 24,
+  },
+  content: {
+    width: "100%",
+    maxWidth: 600,
+    alignSelf: "center",
+  },
 });

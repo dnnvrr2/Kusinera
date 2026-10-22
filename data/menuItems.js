@@ -9,7 +9,7 @@ const menuItems = [
     ingredients: ["Chicken", "Soy sauce", "Vinegar", "Garlic", "Bay leaves", "Rice"],
     serving: "1 person",
     preparationTime: "20 minutes",
-    icon: "restaurant-outline",
+    image: require("../assets/menu/centered/adobo.png"),
   },
   {
     id: "2",
@@ -20,7 +20,7 @@ const menuItems = [
     ingredients: ["Pork", "Tamarind", "Tomato", "Radish", "Water spinach", "String beans"],
     serving: "1-2 people",
     preparationTime: "25 minutes",
-    icon: "flame-outline",
+    image: require("../assets/menu/centered/sinigang.png"),
   },
   {
     id: "3",
@@ -31,7 +31,7 @@ const menuItems = [
     ingredients: ["Beef", "Peanuts", "Eggplant", "Bok choy", "String beans", "Shrimp paste"],
     serving: "1-2 people",
     preparationTime: "30 minutes",
-    icon: "heart-outline",
+    image: require("../assets/menu/centered/kare_kare.png"),
   },
   {
     id: "4",
@@ -42,7 +42,7 @@ const menuItems = [
     ingredients: ["Egg noodles", "Chicken", "Cabbage", "Carrot", "Soy sauce", "Calamansi"],
     serving: "1-2 people",
     preparationTime: "15 minutes",
-    icon: "leaf-outline",
+    image: require("../assets/menu/centered/pancit_canton.png"),
   },
   {
     id: "5",
@@ -53,7 +53,7 @@ const menuItems = [
     ingredients: ["Shaved ice", "Milk", "Sweet beans", "Jellies", "Ube ice cream", "Leche flan"],
     serving: "1 person",
     preparationTime: "10 minutes",
-    icon: "ice-cream-outline",
+    image: require("../assets/menu/centered/halo_halo.png"),
   },
 ];
 

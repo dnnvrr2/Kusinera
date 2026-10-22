@@ -47,7 +47,7 @@ export default function RegisterScreen({ accounts, goToLogin, onRegisterSuccess 
 
   return (
     <AuthLayout title="Create an account" subtitle="Welcome to the Kusinera table.">
-      <AuthInput label="Email" placeholder="you@example.com" value={email} onChangeText={setEmail} keyboardType="email-address" />
+      <AuthInput label="Email" placeholder="kusinera@email.com" value={email} onChangeText={setEmail} keyboardType="email-address" />
       <AuthInput label="Username" placeholder="Choose a username" value={username} onChangeText={setUsername} />
       <AuthInput label="Password" placeholder="At least 8 characters" value={password} onChangeText={setPassword} secureTextEntry />
       <AuthInput label="Confirm password" placeholder="Enter your password again" value={confirmPassword} onChangeText={setConfirmPassword} secureTextEntry />
@@ -59,6 +59,15 @@ export default function RegisterScreen({ accounts, goToLogin, onRegisterSuccess 
 }
 
 const styles = StyleSheet.create({
-  error: { color: "#B42318", marginBottom: 10, lineHeight: 20 },
-  link: { textAlign: "center", marginTop: 20, color: "#6D0808", lineHeight: 22 },
+  error: {
+    color: "#B42318",
+    marginBottom: 10,
+    lineHeight: 20,
+  },
+  link: {
+    textAlign: "center",
+    marginTop: 20,
+    color: "#6D0808",
+    lineHeight: 22,
+  },
 });

@@ -14,6 +14,7 @@ export default function AuthInput({ label, value, onChangeText, placeholder, sec
           accessibilityLabel={label}
           style={styles.input}
           placeholder={placeholder}
+          placeholderTextColor="#808080"
           value={value}
           onChangeText={onChangeText}
           secureTextEntry={isPasswordField && !showPassword}
@@ -45,7 +46,12 @@ const styles = StyleSheet.create({
   wrapper: {
     marginBottom: 15,
   },
-  label: { color: "#403838", fontSize: 14, fontWeight: "600", marginBottom: 7 },
+  label: {
+    color: "#403838",
+    fontSize: 14,
+    fontWeight: "600",
+    marginBottom: 7,
+  },
   field: {
     position: "relative",
     justifyContent: "center",

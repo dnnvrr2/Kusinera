@@ -42,7 +42,20 @@ export default function LoginScreen({ accounts, message, goToRegister, onLoginSu
 }
 
 const styles = StyleSheet.create({
-  error: { color: "#B42318", marginBottom: 10, lineHeight: 20 },
-  success: { color: "#27613B", marginBottom: 16, lineHeight: 20 },
-  link: { textAlign: "center", marginTop: 20, color: "#6D0808", lineHeight: 22 },
+  error: {
+    color: "#B42318",
+    marginBottom: 10,
+    lineHeight: 20,
+  },
+  success: {
+    color: "#27613B",
+    marginBottom: 16,
+    lineHeight: 20,
+  },
+  link: {
+    textAlign: "center",
+    marginTop: 20,
+    color: "#6D0808",
+    lineHeight: 22,
+  },
 });
